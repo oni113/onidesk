@@ -53,7 +53,6 @@ export default {
     },
     methods : {
         getTodos() {
-            // TODO : 서버 REST GET 구현 (axios)
             var vm = this;
             this.$http.get('/todos')
                 .then((result) => {
@@ -71,8 +70,13 @@ export default {
             });
         },
         createTodo(name) {
-            // TODO : 서버 REST POST 구현 (axios)
             if (name != null) {
+                this.$http.post('/todos/add', {name : name})
+                    .then((result) => {
+                        console.log(result.data);
+                        // TODO : new key 값 바인딩
+                    });
+
                 this.id++;
                 var newTodo = {
                     id : this.id,
