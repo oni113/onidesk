@@ -27,20 +27,7 @@ export default {
         return {
             id : 0,
             name : null,
-            todos : [
-                {
-                    id : 1,
-                    name : '청소'
-                },
-                {
-                    id : 2,
-                    name : '코딩'
-                },
-                {
-                    id : 3,
-                    name : '건프라'
-                }
-            ]
+            todos : []
         };
     },
     mounted() {
@@ -63,29 +50,32 @@ export default {
         deleteTodo(id) {
             console.log(id);
             // TODO : 서버 REST DEL 구현 (axios)
-            this.todos.forEach((todo, index) => {
-                if (todo.id === id) {
-                    this.todos.splice(index, 1);
-                }
-            });
+            if (id) {
+                this.$http.delete('/todos/remove/' + id)
+                    .then((result) => {
+                        console.log(result);
+                        this.getTodos();
+                    });
+            }
         },
         createTodo(name) {
             if (name != null) {
-                this.$http.post('/todos/add', {name : name})
-                    .then((result) => {
-                        console.log(result.data);
-                        // TODO : new key 값 바인딩
-                    });
-
-                this.id++;
-                var newTodo = {
-                    id : this.id,
+                var params = {
                     name : name
                 };
-                console.log(newTodo);
-                this.todos.push(newTodo);
+                this.$http.post('/todos/add', params)
+                    .then((result) => {
+                        this.id = result.data.insertId;
+                        var newTodo = {
+                            id : this.id,
+                            name : name
+                        };
+                        console.log(newTodo);
+                        this.todos.push(newTodo);
+                    });
+            } else {
+                this.name = null;
             }
-            this.name = null;
         }
     }
 }
