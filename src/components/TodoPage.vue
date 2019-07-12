@@ -9,7 +9,7 @@
         </div>
         <ul class="list-group">
             <li class="list-group-item" v-for="(todo, index) in todos">
-                {{todo.name}}
+                <a href="#" @click="editTodo(todo.id)">{{todo.name}}</a>
                 <div class="btn-group pull-right" style="font-size:12px; line-height:1;">
                     <button class="btn-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" type="button" name="button">더보기<span class="caret"></span></button>
                     <ul class="dropdown-menu">
@@ -18,6 +18,10 @@
                 </div>
             </li>
         </ul>
+
+        <modal name="hello-world">
+          hello, world!
+        </modal>
     </div>
 </template>
 
@@ -27,7 +31,8 @@ export default {
         return {
             id : 0,
             name : null,
-            todos : []
+            todos : [],
+            showTodo : false
         };
     },
     mounted() {
@@ -76,6 +81,20 @@ export default {
             } else {
                 this.name = null;
             }
+        },
+        editTodo (id) {
+            // TODO : 팝업 오픈
+            this.$modal.show('hello-world');
+            /*
+            this.showTodo = !this.showTodo;
+            console.log(this.$modal);
+            if (this.showTodo) {
+                this.$modal.show('hello-world');
+            } else {
+                this.$modal.hide('hello-world');
+            }
+            console.log(this.showTodo);
+            */
         }
     }
 }

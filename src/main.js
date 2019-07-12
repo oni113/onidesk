@@ -4,6 +4,9 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import axios from 'axios'
+import VModal from 'vue-js-modal'
+
+Vue.use(VModal)
 
 Vue.config.productionTip = false
 Vue.prototype.$http = axios
