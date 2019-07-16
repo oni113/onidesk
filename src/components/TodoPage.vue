@@ -18,14 +18,12 @@
                 </div>
             </li>
         </ul>
-
-        <modal name="hello-world">
-          hello, world!
-        </modal>
+        <modals-container />
     </div>
 </template>
 
 <script>
+import TodoModal from '@/components/common/CustomComponentModal.vue'
 export default {
     data() {
         return {
@@ -84,7 +82,17 @@ export default {
         },
         editTodo (id) {
             // TODO : 팝업 오픈
-            this.$modal.show('hello-world');
+            this.$modal.show(TodoModal, {
+                hot_table : 'data',
+                modal : this.$modal
+            },
+            {
+                name: 'dynamic-modal',
+                width : '330px',
+                height : '130px',
+                draggable : true,
+            });
+
             /*
             this.showTodo = !this.showTodo;
             console.log(this.$modal);
