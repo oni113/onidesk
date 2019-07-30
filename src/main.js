@@ -6,6 +6,9 @@ import router from './router'
 import axios from 'axios'
 import VModal from 'vue-js-modal'
 
+import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap-vue/dist/bootstrap-vue.css'
+
 //Vue.use(VModal, { componentName : 'v-modal', dynamic: true })
 Vue.use(VModal, { dynamic: true })
 

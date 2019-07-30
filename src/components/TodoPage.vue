@@ -81,16 +81,24 @@ export default {
             }
         },
         editTodo (id) {
-            // TODO : 팝업 오픈
+            // TODO : 서버 REST DEL 구현 (axios)
+            /*
+            this.$http.get('/todos/todo/' + id)
+                .then((result) => {
+                    console.log(result);
+                    this.getTodos();
+                });
+            */
+            // TODO : 팝업 오픈 - 사이즈 auto
             this.$modal.show(TodoModal, {
-                hot_table : 'data',
+                editTodo : { id : id, name : 'todo!'},
                 modal : this.$modal
             },
             {
                 name: 'dynamic-modal',
-                width : '330px',
-                height : '130px',
-                draggable : true,
+                //width : '330px',
+                //height : '204px',
+                draggable : true
             });
 
             /*
