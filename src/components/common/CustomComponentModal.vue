@@ -10,6 +10,7 @@
                 </div>
                 <div class="modal-body">
                     <input type="text" v-model="editTodo.name" style="width:100%"/>
+                    <input type="hidden" v-model="editTodo.id"/>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal" @click="$emit('close')">저장</button>

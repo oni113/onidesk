@@ -10,12 +10,16 @@
         <ul class="list-group">
             <li class="list-group-item" v-for="(todo, index) in todos">
                 <a href="#" @click="editTodo(todo.id)">{{todo.name}}</a>
+                <button class='btn btn-danger btn-xs' type="button" value="DEL" @click="deleteTodo(todo.id)"><span class="fa fa-times"></span> DEL</button>
+                <!--
                 <div class="btn-group pull-right" style="font-size:12px; line-height:1;">
+
                     <button class="btn-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" type="button" name="button">더보기<span class="caret"></span></button>
                     <ul class="dropdown-menu">
                         <li><a href="#" @click="deleteTodo(todo.id)">DEL</a></li>
                     </ul>
                 </div>
+                -->
             </li>
         </ul>
         <modals-container />
@@ -81,25 +85,25 @@ export default {
             }
         },
         editTodo (id) {
-            // TODO : 서버 REST DEL 구현 (axios)
-            /*
+            // TODO : 서버 REST get 구현 (axios)
             this.$http.get('/todos/todo/' + id)
                 .then((result) => {
                     console.log(result);
-                    this.getTodos();
+                    this.id = result.data[0].id;
+                    this.name = result.data[0].name;
+
+                    // TODO : 팝업 오픈 - 사이즈 auto
+                    this.$modal.show(TodoModal, {
+                        editTodo : { id : this.id, name : this.name},
+                        modal : this.$modal
+                    },
+                    {
+                        name: 'dynamic-modal',
+                        //width : '330px',
+                        //height : '204px',
+                        draggable : true
+                    });
                 });
-            */
-            // TODO : 팝업 오픈 - 사이즈 auto
-            this.$modal.show(TodoModal, {
-                editTodo : { id : id, name : 'todo!'},
-                modal : this.$modal
-            },
-            {
-                name: 'dynamic-modal',
-                //width : '330px',
-                //height : '204px',
-                draggable : true
-            });
 
             /*
             this.showTodo = !this.showTodo;
