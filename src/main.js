@@ -6,18 +6,11 @@ import router from './router'
 import axios from 'axios'
 import VModal from 'vue-js-modal'
 import firebase from 'firebase'
+import settings from '../config/settings.js'
 
-var firebaseConfig = {
-    apiKey: "AIzaSyAPZPG4maUipAbULFJ5fl-O2pOs_KbWzBU",
-    authDomain: "localhost",
-    databaseURL: "https://onibase-aa4ed.firebaseio.com",
-    projectId: "onibase-aa4ed",
-    storageBucket: "onibase-aa4ed.appspot.com",
-    messagingSenderId: "453674709726",
-    appId: "1:453674709726:web:8703180fdc3652dd57084f"
-};
 // Initialize Firebase
-firebase.initializeApp(firebaseConfig);
+let app;
+firebase.initializeApp(settings.firebaseConfig);
 
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
@@ -33,9 +26,13 @@ Vue.config.productionTip = false
 Vue.prototype.$http = axios
 
 /* eslint-disable no-new */
-new Vue({
-  el: '#app',
-  router,
-  components: { App },
-  template: '<App/>'
-})
+firebase.auth().onAuthStateChanged((user) => {
+    if (!app) {
+        app = new Vue({
+            el: '#app',
+            router,
+            components: { App },
+            template: '<App/>'
+        });
+    }
+});

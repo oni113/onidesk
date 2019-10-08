@@ -22,12 +22,15 @@
                 -->
             </li>
         </ul>
+        <button @click="logout">Logout</button>
         <modals-container />
     </div>
 </template>
 
 <script>
 import TodoModal from '@/components/common/CustomComponentModal.vue'
+import firebase from 'firebase';
+
 export default {
     data() {
         return {
@@ -38,6 +41,10 @@ export default {
         };
     },
     mounted() {
+        console.log(firebase.auth().currentUser);
+        if (!firebase.auth().currentUser) {
+            this.$router.replace('login');
+        }
         this.getTodos();
         this.todos.forEach((todo, index) => {
             if (this.id < todo.id) {
@@ -46,11 +53,15 @@ export default {
         });
     },
     methods : {
+        logout () {
+            firebase.auth().signOut().then(() => {
+                this.$router.replace('login');
+            });
+        },
         getTodos() {
             var vm = this;
             this.$http.get('/todos')
                 .then((result) => {
-                    console.log(result);
                     this.todos = result.data;
                 });
         },
@@ -85,7 +96,6 @@ export default {
             }
         },
         editTodo (id) {
-            // TODO : 서버 REST get 구현 (axios)
             this.$http.get('/todos/todo/' + id)
                 .then((result) => {
                     console.log(result);

@@ -25,6 +25,7 @@ export default {
                 (user) => {
                     console.log(user);
                     alert('Well done! You are now connected');
+                    this.$router.replace('todos');
                 },
                 (error) => {
                     alert('Oops. ' + error.message);
@@ -33,7 +34,9 @@ export default {
         }
     },
     mounted () {
-
+        if (firebase.auth().currentUser) {
+            this.$router.replace('todos');
+        }
     }
 }
 </script>

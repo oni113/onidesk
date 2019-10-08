@@ -23,8 +23,8 @@ export default {
         signUp () {
             firebase.auth().createUserWithEmailAndPassword(this.email, this.password).then(
                 (user) => {
-                    console.log(user);
                     alert('Your account has been created!');
+                    this.$router.replace('todos');
                 },
                 (error) => {
                     alert('Oops. ' + error.message);
@@ -33,7 +33,9 @@ export default {
         }
     },
     mounted () {
-
+        if (firebase.auth().currentUser) {
+            this.$router.replace('todos');
+        }
     }
 }
 </script>
@@ -49,7 +51,7 @@ export default {
     }
     button {
         margin-top: 10px;
-        width: 10%;
+        width: 50%;
         cursor: pointer;
     }
     span {

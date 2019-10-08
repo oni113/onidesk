@@ -13,7 +13,7 @@
                     <input type="hidden" v-model="editTodo.id"/>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal" @click="$emit('close')">저장</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal" @click="saveTodo">저장</button>
                     <button type="button" class="btn btn-default" data-dismiss="modal" @click="$emit('close')">닫기</button>
                 </div>
             </div>
@@ -31,9 +31,24 @@ export default {
         'editTodo',
     ],
     methods : {
-        update() {
-            console.log('TODO : save data');
-            this.$emit('close')
+        saveTodo() {
+            var params = {
+                name : this.editTodo.name
+            };
+            console.log(params);
+            this.$http.put('/todos/todo/' + params.id, params)
+                .then((result) => {
+                    console.log(result.data);
+                    this.editTodo.id = result.data.id;
+                    this.editTodo.name = result.data.name;
+                    /*
+                    var savedTodo = {
+                        id : this.id,
+                        name : this.name
+                    };
+                    */
+                });
+            this.$emit('close');
         }
     }
 }
