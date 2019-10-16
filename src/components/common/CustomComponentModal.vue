@@ -35,20 +35,13 @@ export default {
             var params = {
                 name : this.editTodo.name
             };
-            console.log(params);
-            this.$http.put('/todos/todo/' + params.id, params)
+            this.$http.put('/todos/todo/' + this.editTodo.id, params)
                 .then((result) => {
                     console.log(result.data);
-                    this.editTodo.id = result.data.id;
                     this.editTodo.name = result.data.name;
-                    /*
-                    var savedTodo = {
-                        id : this.id,
-                        name : this.name
-                    };
-                    */
                 });
             this.$emit('close');
+            this.$router.replace('login');
         }
     }
 }
