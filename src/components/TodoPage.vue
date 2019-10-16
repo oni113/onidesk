@@ -9,8 +9,8 @@
         </div>
         <ul class="list-group">
             <li class="list-group-item" v-for="(todo, index) in todos">
-                <a href="#" @click="editTodo(todo.id)">{{todo.name}}</a>
-                <button class='btn btn-danger btn-xs' type="button" value="DEL" @click="deleteTodo(todo.id)"><span class="fa fa-times"></span> DEL</button>
+                <a href="#" @click="editTodo(todo)">{{todo.name}}</a>
+                <button class='btn btn-danger btn-xs' type="button" value="DEL" @click="deleteTodo(todo)"><span class="fa fa-times"></span> DEL</button>
                 <!--
                 <div class="btn-group pull-right" style="font-size:12px; line-height:1;">
 
@@ -65,11 +65,9 @@ export default {
                     this.todos = result.data;
                 });
         },
-        deleteTodo(id) {
-            console.log(id);
-            // TODO : 서버 REST DEL 구현 (axios)
-            if (id) {
-                this.$http.delete('/todos/remove/' + id)
+        deleteTodo(todo) {
+            if (todo.id) {
+                this.$http.delete('/todos/remove/' + todo.id)
                     .then((result) => {
                         console.log(result);
                         this.getTodos();
@@ -95,8 +93,8 @@ export default {
                 this.name = null;
             }
         },
-        editTodo (id) {
-            this.$http.get('/todos/todo/' + id)
+        editTodo (todo) {
+            this.$http.get('/todos/todo/' + todo.id)
                 .then((result) => {
                     console.log(result);
                     this.id = result.data[0].id;
@@ -104,8 +102,9 @@ export default {
 
                     // TODO : 팝업 오픈 - 사이즈 auto
                     this.$modal.show(TodoModal, {
-                        editTodo : { id : this.id, name : this.name},
+                        editTodo : todo,
                         modal : this.$modal
+                        //, todos : this.todos
                     },
                     {
                         name: 'dynamic-modal',

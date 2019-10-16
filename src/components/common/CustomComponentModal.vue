@@ -28,7 +28,8 @@ export default {
         }
     },
     props : [
-        'editTodo',
+        'editTodo'
+        , 'todos'
     ],
     methods : {
         saveTodo() {
@@ -39,9 +40,17 @@ export default {
                 .then((result) => {
                     console.log(result.data);
                     this.editTodo.name = result.data.name;
+                    /*
+                    for (var index in this.todos) {
+                        console.log(this.todos[index]);
+                        if (this.todos[index].id == this.editTodo.id) {
+                            this.todos[index].name = this.editTodo.name;
+                        }
+                    }
+                    */
                 });
             this.$emit('close');
-            this.$router.replace('login');
+            // this.$router.replace('login');
         }
     }
 }
